@@ -1,0 +1,94 @@
+---
+import CallButton from './CallButton.astro';
+import Icon from './Icon.astro';
+import {
+  BUSINESS,
+  CALL_ARIA,
+  CALL_REASSURANCE,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+} from '../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+  /** dark : bandeau sombre pleine largeur. cream : bloc clair encadre. */
+  tone?: 'dark' | 'cream';
+  class?: string;
+}
+
+const {
+  eyebrow = 'Devis gratuit',
+  title = "Un arbre à alléger, un arbre à retirer",
+  text = "Décrivez votre situation au téléphone, on repère l'accès, on chiffre, on intervient.",
+  tone = 'dark',
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    tone === 'dark' ? 'bg-bark-950 text-white' : 'bg-cream',
+    'py-16 md:py-24',
+    className,
+  ]}
+>
+  <div class="container-site">
+    <div class="mx-auto max-w-[820px] text-center">
+      <p
+        class:list={['t-eyebrow', tone === 'dark' && 'text-sap-50/80']}
+      >
+        {eyebrow}
+      </p>
+      <h2 class:list={['t-h2 mt-3', tone === 'dark' && 'text-white']}>
+        {title}
+      </h2>
+      <p
+        class:list={[
+          't-lead mt-4',
+          tone === 'dark' ? 'text-white/70' : 'text-bark-600',
+        ]}
+      >
+        {text}
+      </p>
+
+      <a
+        href={PHONE_HREF}
+        aria-label={CALL_ARIA}
+        data-call-link
+        class:list={[
+          'mt-8 block text-[34px] md:text-[52px] font-extrabold tracking-[-0.02em] leading-none transition-fast transition-colors',
+          tone === 'dark'
+            ? 'text-white hover:text-sap-50'
+            : 'text-bark-950 hover:text-sap-700',
+        ]}
+      >
+        {PHONE_DISPLAY}
+      </a>
+
+      <div class="mt-7 flex justify-center">
+        <CallButton variant={tone === 'dark' ? 'light' : 'solid'} size="lg" />
+      </div>
+
+      <p
+        class:list={[
+          'mt-4 text-[15px]',
+          tone === 'dark' ? 'text-white/60' : 'text-bark-600',
+        ]}
+      >
+        {CALL_REASSURANCE}
+      </p>
+
+      <p
+        class:list={[
+          'mt-6 inline-flex items-center gap-2 text-[15px]',
+          tone === 'dark' ? 'text-white/60' : 'text-bark-600',
+        ]}
+      >
+        <Icon name="clock" size={17} />
+        <span>Horaires : {BUSINESS.hoursText}</span>
+      </p>
+    </div>
+  </div>
+</section>

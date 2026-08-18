@@ -1,0 +1,59 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  tone?: 'light' | 'dark';
+  headingLevel?: 2 | 3;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  align = 'left',
+  tone = 'light',
+  headingLevel = 2,
+  class: className = '',
+} = Astro.props;
+
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<div
+  class:list={[
+    'max-w-[760px]',
+    align === 'center' && 'mx-auto text-center',
+    className,
+  ]}
+>
+  {
+    eyebrow && (
+      <p class:list={['t-eyebrow', tone === 'dark' && 'text-sap-50/80']}>
+        {eyebrow}
+      </p>
+    )
+  }
+  <Heading
+    class:list={[
+      't-h2 mt-3',
+      tone === 'dark' && 'text-white',
+    ]}
+  >
+    {title}
+  </Heading>
+  {
+    intro && (
+      <p
+        class:list={[
+          't-lead mt-4',
+          tone === 'dark' ? 'text-white/70' : 'text-bark-600',
+        ]}
+      >
+        {intro}
+      </p>
+    )
+  }
+</div>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  id?: string;
+  /** white : fond blanc. cream : fond creme. dark : fond bark-950. */
+  tone?: 'white' | 'cream' | 'dark';
+  as?: 'section' | 'div' | 'aside';
+  class?: string;
+  containerClass?: string;
+}
+
+const {
+  id,
+  tone = 'white',
+  as: Tag = 'section',
+  class: className = '',
+  containerClass = '',
+} = Astro.props;
+
+const tones: Record<string, string> = {
+  white: 'bg-white',
+  cream: 'bg-cream',
+  dark: 'bg-bark-950 text-white',
+};
+---
+
+<Tag
+  id={id}
+  class:list={['py-16 md:py-24', tones[tone], className]}
+>
+  <div class:list={['container-site', containerClass]}>
+    <slot />
+  </div>
+</Tag>

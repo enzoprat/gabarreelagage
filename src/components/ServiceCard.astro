@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../types';
+import type { ServiceEntry, ServiceKey } from '../data/site';
+
+interface Props {
+  service: ServiceEntry;
+  headingLevel?: 2 | 3;
+}
+
+const { service, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+
+const icons: Record<ServiceKey, IconName> = {
+  elagage: 'leaf',
+  abattage: 'saw',
+};
+---
+
+<article class="group flex h-full flex-col border border-line rounded-[10px] bg-white p-6 md:p-7 transition-fast transition-colors hover:border-bark-400">
+  <span
+    class="inline-flex h-11 w-11 items-center justify-center rounded-[10px] bg-sap-50 text-sap-700"
+  >
+    <Icon name={icons[service.key]} size={22} />
+  </span>
+
+  <Heading class="t-h3 mt-5">
+    <a
+      href={service.href}
+      class="after:absolute after:inset-0 relative outline-offset-4"
+    >
+      {service.cardTitle}
+    </a>
+  </Heading>
+
+  <p class="mt-2.5 text-[16px] leading-[1.6] text-bark-600">
+    {service.cardText}
+  </p>
+
+  <span
+    class="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-sap-600 group-hover:text-sap-700 transition-fast transition-colors"
+  >
+    Voir la prestation
+    <Icon name="arrow-right" size={17} />
+  </span>
+</article>
+
+<style>
+  article {
+    position: relative;
+  }
+</style>

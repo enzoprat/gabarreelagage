@@ -1,0 +1,171 @@
+---
+import Icon from './Icon.astro';
+import {
+  BUSINESS,
+  CALL_ARIA,
+  COMMUNES,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SERVICES,
+} from '../data/site';
+
+const year = new Date().getFullYear();
+const footerCommunes = COMMUNES.slice(0, 12);
+---
+
+<footer class="bg-bark-950 text-white">
+  <div class="container-site py-16 md:py-20">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-[8px] bg-sap-600 text-white"
+          >
+            <Icon name="leaf" size={20} />
+          </span>
+          <span class="leading-tight">
+            <span class="block text-[19px] font-extrabold tracking-[-0.02em]"
+              >Gabarre</span
+            >
+            <span class="block text-[11.5px] font-medium text-white/60"
+              >Élagage et travaux d'arbres</span
+            >
+          </span>
+        </div>
+
+        <p class="mt-5 text-[15px] leading-[1.65] text-white/60">
+          Élagage et abattage d'arbres à Montauban et dans le Tarn-et-Garonne,
+          démontage par tronçons en milieu contraint. Broyage et évacuation des
+          déchets verts compris au devis.
+        </p>
+
+        <a
+          href={PHONE_HREF}
+          aria-label={CALL_ARIA}
+          data-call-link
+          class="mt-6 inline-flex items-center gap-2.5 text-[24px] font-extrabold tracking-[-0.02em] transition-fast transition-colors hover:text-sap-50"
+        >
+          <Icon name="phone" size={20} />
+          {PHONE_DISPLAY}
+        </a>
+
+        <ul class="mt-5 space-y-2 text-[15px] text-white/60">
+          <li class="flex gap-2.5">
+            <Icon name="map-pin" size={17} class="mt-1 shrink-0" />
+            <span>{BUSINESS.streetAddress}, {BUSINESS.postalCode} {BUSINESS.city}</span>
+          </li>
+          <li class="flex gap-2.5">
+            <Icon name="clock" size={17} class="mt-1 shrink-0" />
+            <span>{BUSINESS.hoursText}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-[15px] font-semibold uppercase tracking-[0.08em]">
+          Prestations
+        </h2>
+        <ul class="mt-5 space-y-3 text-[15px] text-white/60">
+          {
+            SERVICES.map((service) => (
+              <li>
+                <a
+                  href={service.href}
+                  class="transition-fast transition-colors hover:text-white"
+                >
+                  {service.cardTitle}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-[15px] font-semibold uppercase tracking-[0.08em]">
+          Zone d'intervention
+        </h2>
+        <ul class="mt-5 space-y-2.5 text-[15px] text-white/60">
+          {
+            footerCommunes.map((commune) => (
+              <li>
+                <a
+                  href="/zone-intervention"
+                  class="transition-fast transition-colors hover:text-white"
+                >
+                  Élagueur à {commune}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href="/zone-intervention"
+              class="font-semibold text-white transition-fast transition-colors hover:text-sap-50"
+            >
+              Voir les {COMMUNES.length} communes
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-[15px] font-semibold uppercase tracking-[0.08em]">
+          Entreprise
+        </h2>
+        <ul class="mt-5 space-y-3 text-[15px] text-white/60">
+          <li>
+            <a
+              href="/entreprise"
+              class="transition-fast transition-colors hover:text-white"
+              >L'entreprise et le matériel</a
+            >
+          </li>
+          <li>
+            <a
+              href="/realisations"
+              class="transition-fast transition-colors hover:text-white"
+              >Chantiers réalisés</a
+            >
+          </li>
+          <li>
+            <a
+              href="/#faq"
+              class="transition-fast transition-colors hover:text-white"
+              >Questions fréquentes</a
+            >
+          </li>
+          <li>
+            <a
+              href="/mentions-legales"
+              class="transition-fast transition-colors hover:text-white"
+              >Mentions légales</a
+            >
+          </li>
+          <li>
+            <a
+              href="/politique-confidentialite"
+              class="transition-fast transition-colors hover:text-white"
+              >Politique de confidentialité</a
+            >
+          </li>
+        </ul>
+
+        <p class="mt-6 text-[13.5px] leading-[1.6] text-white/60">
+          SIRET {BUSINESS.siret}
+          <br />
+          Responsabilité civile professionnelle : {BUSINESS.insurance}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="container-site flex flex-col gap-3 py-6 text-[13.5px] text-white/60 md:flex-row md:items-center md:justify-between"
+    >
+      <p>© {year} Gabarre Élagage. Tous droits réservés.</p>
+      <p>Montauban, Tarn-et-Garonne (82)</p>
+    </div>
+  </div>
+</footer>

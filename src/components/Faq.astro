@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import type { FaqItem } from '../types';
+
+interface Props {
+  items: FaqItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<div class:list={['border-t border-line', className]}>
+  {
+    items.map((item) => (
+      <details class="group border-b border-line">
+        <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left">
+          <h3 class="t-h3 pr-2">{item.question}</h3>
+          <span class="mt-0.5 shrink-0 text-sap-600 transition-fast group-open:rotate-180">
+            <Icon name="chevron-down" size={22} />
+          </span>
+        </summary>
+        <div class="pb-6 pr-10">
+          <p class="text-[16px] leading-[1.65] text-bark-600">{item.answer}</p>
+        </div>
+      </details>
+    ))
+  }
+</div>

@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import { CALL_ARIA, CALL_LABEL, PHONE_HREF } from '../data/site';
+
+interface Props {
+  /** solid : accent plein. light : blanc sur fond sombre. outline : bordure. */
+  variant?: 'solid' | 'light' | 'outline';
+  size?: 'md' | 'lg';
+  block?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'solid',
+  size = 'md',
+  block = false,
+  class: className = '',
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[10px] font-semibold transition-fast transition-colors';
+
+const variants: Record<string, string> = {
+  solid: 'bg-sap-600 text-white hover:bg-sap-700',
+  light: 'bg-white text-bark-950 hover:bg-cream',
+  outline:
+    'border border-line bg-white text-bark-950 hover:border-sap-600 hover:text-sap-700',
+};
+
+const sizes: Record<string, string> = {
+  md: 'min-h-[48px] px-5 text-[16px]',
+  lg: 'min-h-[56px] px-7 text-[17px]',
+};
+---
+
+<a
+  href={PHONE_HREF}
+  aria-label={CALL_ARIA}
+  data-call-link
+  class:list={[
+    base,
+    variants[variant],
+    sizes[size],
+    block && 'w-full',
+    className,
+  ]}
+>
+  <Icon name="phone" size={size === 'lg' ? 20 : 18} />
+  <span>{CALL_LABEL}</span>
+</a>

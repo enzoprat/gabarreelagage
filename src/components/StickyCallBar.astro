@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import { CALL_ARIA, CALL_LABEL, PHONE_HREF } from '../data/site';
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-50 border-t border-bark-800 bg-bark-950 md:hidden"
+  style="padding-bottom: env(safe-area-inset-bottom, 0px);"
+>
+  <a
+    href={PHONE_HREF}
+    aria-label={CALL_ARIA}
+    data-call-link
+    class="flex h-[56px] w-full items-center justify-center gap-2.5 bg-sap-600 text-[17px] font-semibold text-white transition-fast transition-colors active:bg-sap-700"
+  >
+    <Icon name="phone" size={19} />
+    <span>{CALL_LABEL}</span>
+  </a>
+</div>

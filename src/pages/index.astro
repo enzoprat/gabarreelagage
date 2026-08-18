@@ -1,0 +1,566 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CallButton from '../components/CallButton.astro';
+import CallCta from '../components/CallCta.astro';
+import Card from '../components/Card.astro';
+import Faq from '../components/Faq.astro';
+import Icon from '../components/Icon.astro';
+import heroImage from '../assets/hero-elagueur-montauban.webp';
+import { FAQ_HOME } from '../data/faq-home';
+import { REALISATIONS } from '../data/realisations';
+import {
+  BUSINESS,
+  CALL_ARIA,
+  CALL_REASSURANCE,
+  COMMUNES,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SERVICES,
+  SERVICE_A_LA_PERSONNE,
+} from '../data/site';
+import {
+  breadcrumbSchema,
+  faqSchema,
+  localBusinessSchema,
+} from '../lib/schema';
+
+const title = 'Élagueur à Montauban | Élagage et abattage d\'arbres';
+const description =
+  "Élagueur à Montauban et en Tarn-et-Garonne. Élagage, abattage et démontage par tronçons, broyage et évacuation compris. Devis gratuit au 06 66 63 73 35.";
+
+const trustItems = [
+  {
+    icon: 'shield' as const,
+    text: `Assuré en responsabilité civile professionnelle, ${BUSINESS.insurance}`,
+  },
+  {
+    icon: 'harness' as const,
+    text: 'Travaux en hauteur, grimpeur et nacelle',
+  },
+  {
+    icon: 'truck' as const,
+    text: 'Broyage et évacuation compris au devis',
+  },
+];
+
+if (SERVICE_A_LA_PERSONNE) {
+  trustItems.push({
+    icon: 'euro' as const,
+    text: "Crédit d'impôt 50 % sur l'entretien de jardin",
+  });
+}
+
+const arguments4 = [
+  {
+    title: "Une taille qui respecte la structure de l'arbre",
+    text: "Nous coupons sur tire-sève ou sur ramification, jamais à la volée. L'arbre referme ses plaies, il ne repart pas en gourmands mal ancrés qui casseront dans dix ans. Concrètement, cela veut dire une réduction de couronne plutôt qu'un étêtage, même quand l'étêtage serait plus rapide à faire.",
+  },
+  {
+    title: "Le matériel choisi selon l'accès, pas l'inverse",
+    text: "Nacelle quand le camion peut approcher, travail en grimpé sur cordes quand le jardin est clos, le terrain en pente ou la pelouse fragile. Les branches descendent à la corde en rétention là où la chute libre abîmerait un massif, une clôture ou une toiture.",
+  },
+  {
+    title: 'Le chantier est rendu propre et praticable',
+    text: "Le broyat est ramassé ou étalé en paillage selon votre choix, la pelouse est soufflée, les allées sont dégagées. Vous récupérez un terrain utilisable le soir même, pas un tas de branches à gérer pendant trois semaines.",
+  },
+  {
+    title: 'Un devis ferme, évacuation comprise',
+    text: "Le prix annoncé après repérage est le prix payé. L'évacuation des rémanents et le passage en plateforme de compostage sont intégrés au devis, il n'y a pas de supplément à la benne ajouté en fin de chantier.",
+  },
+];
+
+const steps = [
+  {
+    number: '01',
+    title: 'Vous appelez et décrivez le besoin',
+    text: "Essence, hauteur approximative, ce qui vous gêne, la présence d'une ligne ou d'une toiture à proximité. Quelques questions suffisent pour cadrer le chantier.",
+  },
+  {
+    number: '02',
+    title: "Visite et repérage des accès",
+    text: "Nous passons voir l'arbre, l'état du bois, la largeur du portail, la portance du terrain. C'est ce qui détermine le mode opératoire et le prix.",
+  },
+  {
+    number: '03',
+    title: 'Devis détaillé remis rapidement',
+    text: "Prestation ligne par ligne, évacuation comprise, durée estimée. Vous savez ce qui sera coupé et ce qui restera en place avant de vous engager.",
+  },
+  {
+    number: '04',
+    title: 'Intervention, broyage et nettoyage',
+    text: "Zone sécurisée, coupe, descente des bois, broyage sur place ou chargement. Le terrain est rendu propre avant que nous quittions le chantier.",
+  },
+];
+
+const schemas = [
+  localBusinessSchema(),
+  faqSchema(FAQ_HOME),
+  breadcrumbSchema([]),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path="/"
+  schemas={schemas}
+>
+  <!-- 1. Hero -->
+  <section class="border-b border-line bg-white">
+    <div class="container-site">
+      <div class="grid items-center gap-10 py-12 md:py-16 lg:grid-cols-[1.2fr_1fr] lg:gap-14 lg:py-20">
+        <div>
+          <p class="t-eyebrow">Montauban et Tarn-et-Garonne</p>
+
+          <h1 class="t-h1 mt-4">
+            Élagueur à Montauban, vos arbres taillés, abattus et évacués.
+          </h1>
+
+          <p class="t-lead mt-5 max-w-[560px]">
+            Élagage et réduction de couronne, abattage et démontage par tronçons.
+            Le broyage et l'évacuation des déchets verts sont compris dans le
+            devis.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-5">
+            <CallButton size="lg" class="w-full sm:w-auto" />
+            <a
+              href={PHONE_HREF}
+              aria-label={CALL_ARIA}
+              data-call-link
+              class="hidden lg:block text-[34px] font-extrabold leading-none tracking-[-0.02em] transition-fast transition-colors hover:text-sap-700"
+            >
+              {PHONE_DISPLAY}
+            </a>
+          </div>
+
+          <p class="mt-4 text-[15px] text-bark-600">{CALL_REASSURANCE}</p>
+
+          <ul class="mt-8 grid gap-3 border-t border-line pt-7 sm:grid-cols-3">
+            {
+              [
+                'Devis gratuit après repérage',
+                'Intervention en Tarn-et-Garonne',
+                'Déchets verts évacués',
+              ].map((proof) => (
+                <li class="flex items-start gap-2.5 text-[15px] font-medium">
+                  <span class="mt-0.5 text-sap-600">
+                    <Icon name="check" size={18} />
+                  </span>
+                  <span>{proof}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="relative">
+          <Image
+            src={heroImage}
+            alt="Élagueur grimpeur en train de réduire la couronne d'un arbre au-dessus d'un jardin à Montauban"
+            widths={[560, 800, 1200]}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            class="w-full rounded-[10px] border border-line object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Bandeau confiance -->
+  <section class="bg-bark-950 text-white" aria-label="Garanties">
+    <div class="container-site">
+      <ul
+        class:list={[
+          'grid divide-y divide-white/10 py-2 md:divide-x md:divide-y-0',
+          trustItems.length === 4
+            ? 'md:grid-cols-2 lg:grid-cols-4'
+            : 'md:grid-cols-3',
+        ]}
+      >
+        {
+          trustItems.map((item) => (
+            <li class="flex items-start gap-3 px-0 py-5 md:px-7 md:first:pl-0 md:last:pr-0">
+              <span class="mt-0.5 shrink-0 text-sap-600">
+                <Icon name={item.icon} size={22} />
+              </span>
+              <span class="text-[15px] leading-[1.55] text-white/80">
+                {item.text}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Nos prestations -->
+  <Section id="prestations" tone="white">
+    <SectionHeader
+      eyebrow="Nos prestations"
+      title="Élagage et abattage d'arbres"
+      intro="Chaque prestation est chiffrée après repérage, avec le broyage et l'évacuation des rémanents intégrés au devis."
+    />
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2 md:mt-12">
+      {SERVICES.map((service) => <ServiceCard service={service} />)}
+    </div>
+  </Section>
+
+  <!-- 4. Urgence tempête -->
+  <section class="bg-bark-950 text-white">
+    <div class="container-site py-16 md:py-24">
+      <div class="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+        <div>
+          <p class="t-eyebrow inline-flex items-center gap-2 text-sap-50/80">
+            <Icon name="alert" size={17} />
+            Urgence tempête
+          </p>
+
+          <h2 class="t-h2 mt-3 text-white">
+            Arbre tombé, branche fendue, chablis sur une toiture
+          </h2>
+
+          <p class="t-lead mt-4 text-white/70">
+            Après un coup de vent, une branche restée suspendue ou un tronc
+            appuyé sur une charpente peut lâcher à tout moment. Ces situations
+            passent avant le planning courant.
+          </p>
+
+          <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+            {
+              [
+                'Arbre couché sur un toit, un véhicule ou une clôture',
+                'Branche cassée restée accrochée dans le houppier',
+                'Tronc fendu ou déchaussé qui penche vers la maison',
+                'Accès ou voie privée bloqués par un arbre en travers',
+              ].map((item) => (
+                <li class="flex items-start gap-2.5 text-[15px] text-white/80">
+                  <span class="mt-0.5 shrink-0 text-sap-600">
+                    <Icon name="check" size={18} />
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-8 max-w-[620px] text-[15px] leading-[1.65] text-white/60">
+            Nous photographions la situation avant intervention, ces clichés
+            servent à votre déclaration de sinistre. Si une ligne électrique ou
+            téléphonique est touchée, ne vous en approchez pas et prévenez
+            d'abord le gestionnaire de réseau.
+          </p>
+        </div>
+
+        <div class="rounded-[10px] border border-white/15 bg-bark-800 p-7 md:p-9">
+          <p class="text-[15px] font-semibold uppercase tracking-[0.08em] text-white/60">
+            Appel direct
+          </p>
+
+          <a
+            href={PHONE_HREF}
+            aria-label={CALL_ARIA}
+            data-call-link
+            class="mt-4 block text-[38px] font-extrabold leading-none tracking-[-0.02em] transition-fast transition-colors hover:text-sap-50 md:text-[46px]"
+          >
+            {PHONE_DISPLAY}
+          </a>
+
+          <div class="mt-7">
+            <CallButton variant="light" size="lg" block />
+          </div>
+
+          <p class="mt-4 text-[15px] text-white/60">{CALL_REASSURANCE}</p>
+
+          <dl class="mt-8 space-y-4 border-t border-white/10 pt-7 text-[15px]">
+            <div class="flex items-start gap-3">
+              <dt class="sr-only">Horaires</dt>
+              <span class="mt-0.5 shrink-0 text-sap-600">
+                <Icon name="clock" size={19} />
+              </span>
+              <dd class="text-white/80">{BUSINESS.hoursText}</dd>
+            </div>
+            <div class="flex items-start gap-3">
+              <dt class="sr-only">Zone couverte</dt>
+              <span class="mt-0.5 shrink-0 text-sap-600">
+                <Icon name="map-pin" size={19} />
+              </span>
+              <dd class="text-white/80">
+                Montauban et {COMMUNES.length - 1} communes du Tarn-et-Garonne
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Pourquoi Gabarre -->
+  <Section tone="cream">
+    <SectionHeader
+      eyebrow="Pourquoi Gabarre"
+      title="Quatre partis pris qui changent le résultat"
+      intro="Ce ne sont pas des promesses commerciales mais des choix techniques que vous verrez sur le chantier."
+    />
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2 md:mt-12">
+      {
+        arguments4.map((item) => (
+          <Card>
+            <h3 class="t-h3">{item.title}</h3>
+            <p class="mt-3 text-[16px] leading-[1.65] text-bark-600">
+              {item.text}
+            </p>
+          </Card>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- 6. Quand faire élaguer -->
+  <Section id="calendrier" tone="white">
+    <SectionHeader
+      eyebrow="Calendrier"
+      title="Quand faire élaguer vos arbres"
+      intro="La période de coupe influe autant sur la reprise de l'arbre que la qualité de la taille elle-même."
+    />
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-x-12 md:mt-12">
+      <article>
+        <h3 class="t-h3">La taille en période de repos végétatif</h3>
+        <p class="mt-3 text-[16px] leading-[1.65] text-bark-600">
+          De la chute des feuilles au début du débourrement, en gros de novembre
+          à mars hors période de gel fort, l'arbre est à l'arrêt. La structure
+          est lisible sans le feuillage, les plaies sèchent avant la reprise et
+          la cicatrisation démarre au printemps. C'est la fenêtre habituelle
+          pour une <a class="font-medium text-sap-600 underline underline-offset-[3px] hover:text-sap-700" href="/services/elagage">réduction de couronne ou une éclaircie</a>.
+        </p>
+      </article>
+
+      <article>
+        <h3 class="t-h3">La taille en vert, selon les essences</h3>
+        <p class="mt-3 text-[16px] leading-[1.65] text-bark-600">
+          Certaines essences supportent mal la coupe hivernale. Les érables et
+          les bouleaux pleurent fortement en fin d'hiver, les prunus et les
+          cerisiers se taillent plutôt en été pour limiter les risques de
+          chancre. Sur ces sujets, une intervention en juin ou en septembre
+          donne un meilleur résultat qu'une coupe en février.
+        </p>
+      </article>
+
+      <article>
+        <h3 class="t-h3">La période de nidification</h3>
+        <p class="mt-3 text-[16px] leading-[1.65] text-bark-600">
+          De la mi-mars à la fin juillet, les houppiers abritent des nichées. La
+          LPO et l'Office français de la biodiversité recommandent de ne pas
+          intervenir pendant cette fenêtre. Les travaux non urgents se calent
+          donc plutôt en fin d'été ou en hiver, sauf risque avéré pour les
+          personnes ou les biens.
+        </p>
+      </article>
+
+      <article>
+        <h3 class="t-h3">Le cas de l'abattage</h3>
+        <p class="mt-3 text-[16px] leading-[1.65] text-bark-600">
+          Un <a class="font-medium text-sap-600 underline underline-offset-[3px] hover:text-sap-700" href="/services/abattage">abattage</a>
+          se pratique toute l'année, la saison n'a pas d'incidence sur un arbre
+          que l'on retire. En revanche, une déclaration préalable peut être
+          exigée si le PLU protège le sujet ou si la parcelle est en espace boisé
+          classé. Le réflexe utile est d'appeler le service urbanisme avant
+          d'engager les travaux.
+        </p>
+      </article>
+    </div>
+  </Section>
+
+  <!-- 7. Déroulé d'un chantier -->
+  <Section tone="cream">
+    <SectionHeader
+      eyebrow="Déroulé"
+      title="De votre appel au terrain rendu propre"
+      intro="Quatre étapes, dans cet ordre, du premier échange téléphonique au nettoyage final."
+    />
+
+    <ol class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4 md:mt-12">
+      {
+        steps.map((step) => (
+          <li class="border border-line rounded-[10px] bg-white p-6 md:p-7">
+            <span class="block text-[15px] font-bold tracking-[0.06em] text-sap-600">
+              {step.number}
+            </span>
+            <h3 class="t-h3 mt-3">{step.title}</h3>
+            <p class="mt-2.5 text-[16px] leading-[1.6] text-bark-600">
+              {step.text}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-10 flex flex-col items-start gap-3">
+      <CallButton size="lg" />
+      <p class="text-[15px] text-bark-600">{CALL_REASSURANCE}</p>
+    </div>
+  </Section>
+
+  <!-- 8. Réalisations -->
+  <Section tone="white">
+    <SectionHeader
+      eyebrow="Réalisations"
+      title="Deux chantiers, avant et après"
+      intro="Essence, prestation, commune et contrainte principale rencontrée sur place."
+    />
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-3 md:mt-12">
+      {
+        REALISATIONS.map((item) => (
+          <article class="flex h-full flex-col border border-line rounded-[10px] bg-white overflow-hidden">
+            <div class="grid grid-cols-2 gap-px bg-line">
+              <figure class="relative bg-white">
+                <Image
+                  src={item.before}
+                  alt={item.beforeAlt}
+                  widths={[300, 500]}
+                  sizes="(min-width: 1024px) 190px, 45vw"
+                  loading="lazy"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+                <figcaption class="absolute left-2.5 top-2.5 rounded-[6px] bg-bark-950/85 px-2 py-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-white">
+                  Avant
+                </figcaption>
+              </figure>
+              <figure class="relative bg-white">
+                <Image
+                  src={item.after}
+                  alt={item.afterAlt}
+                  widths={[300, 500]}
+                  sizes="(min-width: 1024px) 190px, 45vw"
+                  loading="lazy"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+                <figcaption class="absolute left-2.5 top-2.5 rounded-[6px] bg-sap-600 px-2 py-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-white">
+                  Après
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class="t-h3">{item.prestation}</h3>
+              <dl class="mt-3 space-y-1.5 text-[15px] text-bark-600">
+                <div class="flex gap-2">
+                  <dt class="font-medium text-bark-950">Essence</dt>
+                  <dd>{item.essence}</dd>
+                </div>
+                <div class="flex gap-2">
+                  <dt class="font-medium text-bark-950">Commune</dt>
+                  <dd>{item.commune}</dd>
+                </div>
+                <div class="flex gap-2">
+                  <dt class="font-medium text-bark-950">Contrainte</dt>
+                  <dd>{item.contrainte}</dd>
+                </div>
+              </dl>
+              <p class="mt-4 text-[15px] leading-[1.6] text-bark-600">
+                {item.resume}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-10">
+      <a
+        href="/realisations"
+        class="inline-flex items-center gap-2 text-[15px] font-semibold text-sap-600 transition-fast transition-colors hover:text-sap-700"
+      >
+        Voir tous les chantiers
+        <Icon name="arrow-right" size={17} />
+      </a>
+    </div>
+  </Section>
+
+  <!-- 9. Zone d'intervention -->
+  <Section id="zone" tone="cream">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div>
+        <SectionHeader
+          eyebrow="Zone d'intervention"
+          title="Montauban et le nord du Tarn-et-Garonne"
+        />
+        <p class="mt-4 text-[16px] leading-[1.65] text-bark-600">
+          Nous intervenons autour de Montauban, sur la vallée du Tarn et de
+          l'Aveyron, jusqu'à Caussade au nord, Moissac et Castelsarrasin à
+          l'ouest, Grisolles et Villemur-sur-Tarn au sud. Le déplacement est
+          compris dans le devis sur toutes les communes de cette liste.
+        </p>
+        <p class="mt-4 text-[16px] leading-[1.65] text-bark-600">
+          Si votre commune n'apparaît pas et qu'elle se trouve à proximité,
+          appelez, nous vous dirons franchement si nous pouvons intervenir.
+        </p>
+        <div class="mt-7">
+          <a
+            href="/zone-intervention"
+            class="inline-flex items-center gap-2 text-[15px] font-semibold text-sap-600 transition-fast transition-colors hover:text-sap-700"
+          >
+            Voir la zone détaillée
+            <Icon name="arrow-right" size={17} />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <ul class="flex flex-wrap gap-2">
+          {
+            COMMUNES.map((commune) => (
+              <li>
+                <a
+                  href="/zone-intervention"
+                  class="inline-flex min-h-[40px] items-center rounded-[8px] border border-line bg-white px-3.5 text-[15px] text-bark-600 transition-fast transition-colors hover:border-sap-600 hover:text-sap-700"
+                >
+                  {commune}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 10. FAQ -->
+  <Section id="faq" tone="white">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <SectionHeader
+          eyebrow="Questions fréquentes"
+          title="Prix, autorisations, voisinage, délais"
+        />
+        <p class="mt-4 text-[16px] leading-[1.65] text-bark-600">
+          Les réponses juridiques ci-dessous donnent le cadre général. Pour un
+          cas précis, la mairie et le PLU de votre commune restent la référence.
+        </p>
+        <div class="mt-7">
+          <CallButton />
+          <p class="mt-3 text-[15px] text-bark-600">{CALL_REASSURANCE}</p>
+        </div>
+      </div>
+
+      <Faq items={FAQ_HOME} />
+    </div>
+  </Section>
+
+  <!-- 11. CTA final -->
+  <CallCta
+    eyebrow="Devis gratuit"
+    title="Décrivez votre arbre, nous vous disons ce qui est possible"
+    text="Un appel suffit pour cadrer le chantier, fixer la visite de repérage et obtenir un devis ferme, évacuation comprise."
+  />
+</BaseLayout>

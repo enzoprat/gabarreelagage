@@ -1,0 +1,256 @@
+---
+import Icon from './Icon.astro';
+import CallButton from './CallButton.astro';
+import {
+  CALL_ARIA,
+  CALL_LABEL,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SERVICES,
+} from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isServices = path.startsWith('/services');
+
+const mainLinks = [
+  { href: '/zone-intervention', label: "Zone d'intervention" },
+  { href: '/realisations', label: 'Réalisations' },
+  { href: '/entreprise', label: 'Entreprise' },
+  { href: '/#faq', label: 'Questions fréquentes' },
+];
+
+/** Le desktop porte 4 entrees, la FAQ reste accessible depuis le pied de page. */
+const desktopLinks = mainLinks.slice(0, 3);
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-[2px]"
+>
+  <div class="container-site">
+    <div
+      id="header-inner"
+      class="flex h-[76px] items-center justify-between gap-6 transition-fast lg:h-[84px]"
+    >
+      <a
+        href={import.meta.env.BASE_URL}
+        class="flex shrink-0 items-center gap-2.5"
+        aria-label="Gabarre Élagage, retour à l'accueil"
+      >
+        <span
+          class="inline-flex h-9 w-9 items-center justify-center rounded-[8px] bg-sap-600 text-white"
+        >
+          <Icon name="leaf" size={20} />
+        </span>
+        <span class="leading-tight">
+          <span class="block text-[19px] font-extrabold tracking-[-0.02em]"
+            >Gabarre</span
+          >
+          <span class="block text-[11.5px] font-medium text-bark-600"
+            >Élagage et travaux d'arbres</span
+          >
+        </span>
+      </a>
+
+      <nav class="hidden lg:block" aria-label="Navigation principale">
+        <ul class="flex items-center gap-1">
+          <li class="group relative">
+            <a
+              href="/services/elagage"
+              aria-current={isServices ? 'true' : undefined}
+              class:list={[
+                'inline-flex items-center gap-1.5 whitespace-nowrap rounded-[8px] px-3 py-2 text-[15px] font-medium transition-fast transition-colors hover:text-sap-700',
+                isServices ? 'text-sap-700' : 'text-bark-600',
+              ]}
+            >
+              Prestations
+              <Icon name="chevron-down" size={15} />
+            </a>
+
+            <div
+              class="invisible absolute left-0 top-full z-50 w-[320px] pt-2 opacity-0 transition-fast group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+            >
+              <ul class="rounded-[10px] border border-line bg-white p-2 shadow-[0_1px_2px_rgba(13,18,16,0.06)]">
+                {
+                  SERVICES.map((service) => (
+                    <li>
+                      <a
+                        href={service.href}
+                        aria-current={path === service.href ? 'page' : undefined}
+                        class:list={[
+                          'block rounded-[8px] px-3 py-2.5 text-[15px] transition-fast transition-colors hover:bg-cream hover:text-sap-700',
+                          path === service.href
+                            ? 'text-sap-700 font-semibold'
+                            : 'text-bark-600',
+                        ]}
+                      >
+                        {service.cardTitle}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </li>
+
+          {
+            desktopLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={path === link.href ? 'page' : undefined}
+                  class:list={[
+                    'inline-flex items-center whitespace-nowrap rounded-[8px] px-3 py-2 text-[15px] font-medium transition-fast transition-colors hover:text-sap-700',
+                    path === link.href ? 'text-sap-700' : 'text-bark-600',
+                  ]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a
+          href={PHONE_HREF}
+          aria-label={CALL_ARIA}
+          data-call-link
+          class="hidden md:inline-flex lg:hidden xl:inline-flex items-center gap-2 whitespace-nowrap text-[17px] font-bold tracking-[-0.01em] text-bark-950 transition-fast transition-colors hover:text-sap-700"
+        >
+          <Icon name="phone" size={18} />
+          {PHONE_DISPLAY}
+        </a>
+
+        <span class="hidden md:block">
+          <CallButton />
+        </span>
+
+        <button
+          type="button"
+          id="menu-open"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-line text-bark-950 transition-fast transition-colors hover:border-bark-400 lg:hidden"
+        >
+          <span class="sr-only">Ouvrir le menu</span>
+          <Icon name="menu" size={22} />
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  hidden
+  class="fixed inset-0 z-50 bg-white lg:hidden"
+>
+  <div class="flex h-full flex-col">
+    <div class="container-site">
+      <div class="flex h-[76px] items-center justify-between">
+        <span class="text-[19px] font-extrabold tracking-[-0.02em]">Menu</span>
+        <button
+          type="button"
+          id="menu-close"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-line text-bark-950 transition-fast transition-colors hover:border-bark-400"
+        >
+          <span class="sr-only">Fermer le menu</span>
+          <Icon name="close" size={22} />
+        </button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto border-t border-line">
+      <div class="container-site py-6">
+        <a
+          href={PHONE_HREF}
+          aria-label={CALL_ARIA}
+          data-call-link
+          class="flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-sap-600 px-5 text-[17px] font-semibold text-white transition-fast transition-colors hover:bg-sap-700"
+        >
+          <Icon name="phone" size={19} />
+          {CALL_LABEL}
+        </a>
+
+        <nav class="mt-8" aria-label="Navigation mobile">
+          <p class="t-eyebrow">Prestations</p>
+          <ul class="mt-3 border-t border-line">
+            {
+              SERVICES.map((service) => (
+                <li class="border-b border-line">
+                  <a
+                    href={service.href}
+                    class="flex min-h-[52px] items-center text-[16px] font-medium text-bark-950"
+                  >
+                    {service.cardTitle}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="t-eyebrow mt-8">Le site</p>
+          <ul class="mt-3 border-t border-line">
+            {
+              mainLinks.map((link) => (
+                <li class="border-b border-line">
+                  <a
+                    href={link.href}
+                    class="flex min-h-[52px] items-center text-[16px] font-medium text-bark-950"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById('menu-open');
+  const closeBtn = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  function setMenu(open: boolean) {
+    if (!menu || !openBtn) return;
+    menu.hidden = !open;
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      (menu.querySelector('#menu-close') as HTMLElement | null)?.focus();
+    } else {
+      openBtn.focus();
+    }
+  }
+
+  openBtn?.addEventListener('click', () => setMenu(true));
+  closeBtn?.addEventListener('click', () => setMenu(false));
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu && !menu.hidden) setMenu(false);
+  });
+
+  const inner = document.getElementById('header-inner');
+  let compact = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      const next = window.scrollY > 24;
+      if (next === compact || !inner) return;
+      compact = next;
+      inner.classList.toggle('h-[64px]', next);
+      inner.classList.toggle('lg:h-[68px]', next);
+      inner.classList.toggle('h-[76px]', !next);
+      inner.classList.toggle('lg:h-[84px]', !next);
+    },
+    { passive: true }
+  );
+</script>
