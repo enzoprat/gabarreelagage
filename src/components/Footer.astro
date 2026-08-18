@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+import logoBlanc from '../assets/logo-gabarre-horizontal-blanc.png';
 import {
   BUSINESS,
   CALL_ARIA,
@@ -17,21 +19,14 @@ const footerCommunes = COMMUNES.slice(0, 12);
   <div class="container-site py-16 md:py-20">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
       <div>
-        <div class="flex items-center gap-2.5">
-          <span
-            class="inline-flex h-9 w-9 items-center justify-center rounded-[8px] bg-sap-600 text-white"
-          >
-            <Icon name="leaf" size={20} />
-          </span>
-          <span class="leading-tight">
-            <span class="block text-[19px] font-extrabold tracking-[-0.02em]"
-              >Gabarre</span
-            >
-            <span class="block text-[11.5px] font-medium text-white/60"
-              >Élagage et travaux d'arbres</span
-            >
-          </span>
-        </div>
+        <Image
+          src={logoBlanc}
+          alt="Gabarre Élagage"
+          widths={[220, 440]}
+          sizes="220px"
+          class="h-auto w-[220px]"
+          loading="lazy"
+        />
 
         <p class="mt-5 text-[15px] leading-[1.65] text-white/60">
           Élagage et abattage d'arbres à Montauban et dans le Tarn-et-Garonne,

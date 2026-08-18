@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
+import logo from '../assets/logo-gabarre-horizontal.png';
 import {
   CALL_ARIA,
   CALL_LABEL,
@@ -32,24 +34,20 @@ const desktopLinks = mainLinks.slice(0, 3);
       id="header-inner"
       class="flex h-[76px] items-center justify-between gap-6 transition-fast lg:h-[84px]"
     >
+      {/* Le logo porte deja son lettrage, pas de texte redondant a cote. */}
       <a
         href={import.meta.env.BASE_URL}
-        class="flex shrink-0 items-center gap-2.5"
+        class="flex shrink-0 items-center"
         aria-label="Gabarre Élagage, retour à l'accueil"
       >
-        <span
-          class="inline-flex h-9 w-9 items-center justify-center rounded-[8px] bg-sap-600 text-white"
-        >
-          <Icon name="leaf" size={20} />
-        </span>
-        <span class="leading-tight">
-          <span class="block text-[19px] font-extrabold tracking-[-0.02em]"
-            >Gabarre</span
-          >
-          <span class="block text-[11.5px] font-medium text-bark-600"
-            >Élagage et travaux d'arbres</span
-          >
-        </span>
+        <Image
+          src={logo}
+          alt="Gabarre Élagage"
+          widths={[190, 380]}
+          sizes="190px"
+          class="h-[41px] w-auto lg:h-[46px]"
+          loading="eager"
+        />
       </a>
 
       <nav class="hidden lg:block" aria-label="Navigation principale">

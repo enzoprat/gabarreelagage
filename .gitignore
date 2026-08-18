@@ -12,3 +12,6 @@ node_modules/
 # systeme
 .DS_Store
 *.log
+
+# reglages locaux de preview
+.claude/
