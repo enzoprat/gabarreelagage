@@ -1,7 +1,11 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Icon from './Icon.astro';
 import type { IconName } from '../types';
 import type { ServiceEntry, ServiceKey } from '../data/site';
+import elagageImg from '../assets/service-elagage-grimpe.webp';
+import abattageImg from '../assets/service-abattage-demontage.webp';
 
 interface Props {
   service: ServiceEntry;
@@ -15,9 +19,32 @@ const icons: Record<ServiceKey, IconName> = {
   elagage: 'leaf',
   abattage: 'saw',
 };
+
+const visuals: Record<ServiceKey, { src: ImageMetadata; alt: string }> = {
+  elagage: {
+    src: elagageImg,
+    alt: "Élagueur sur corde taillant une charpentière à la tronçonneuse en hauteur",
+  },
+  abattage: {
+    src: abattageImg,
+    alt: 'Démontage par tronçons : tronc sectionné progressivement depuis le haut',
+  },
+};
+
+const visual = visuals[service.key];
 ---
 
-<article class="group flex h-full flex-col border border-line rounded-[10px] bg-white p-6 md:p-7 transition-fast transition-colors hover:border-bark-400">
+<article class="group flex h-full flex-col border border-line rounded-[10px] bg-white overflow-hidden transition-fast transition-colors hover:border-bark-400">
+  <Image
+    src={visual.src}
+    alt={visual.alt}
+    widths={[400, 700]}
+    sizes="(min-width: 768px) 380px, 100vw"
+    loading="lazy"
+    class="aspect-[16/10] w-full object-cover"
+  />
+
+  <div class="flex flex-1 flex-col p-6 md:p-7">
   <span
     class="inline-flex h-11 w-11 items-center justify-center rounded-[10px] bg-sap-50 text-sap-700"
   >
@@ -43,6 +70,7 @@ const icons: Record<ServiceKey, IconName> = {
     Voir la prestation
     <Icon name="arrow-right" size={17} />
   </span>
+  </div>
 </article>
 
 <style>

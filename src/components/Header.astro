@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-import logo from '../assets/logo-gabarre-horizontal.png';
+import logo from '../assets/logo-gabarre.png';
 import {
   CALL_ARIA,
   CALL_LABEL,
@@ -32,20 +32,22 @@ const desktopLinks = mainLinks.slice(0, 3);
   <div class="container-site">
     <div
       id="header-inner"
-      class="flex h-[76px] items-center justify-between gap-6 transition-fast lg:h-[84px]"
+      class="flex h-[96px] items-center justify-between gap-6 transition-fast lg:h-[108px]"
     >
-      {/* Le logo porte deja son lettrage, pas de texte redondant a cote. */}
+      {/* Le logo porte deja son lettrage, pas de texte redondant a cote.
+          Sa hauteur suit celle du header, y compris pendant la compaction
+          au scroll : une seule source de verite, la hauteur du conteneur. */}
       <a
         href={import.meta.env.BASE_URL}
-        class="flex shrink-0 items-center"
+        class="flex h-full shrink-0 items-center py-2.5"
         aria-label="Gabarre Élagage, retour à l'accueil"
       >
         <Image
           src={logo}
           alt="Gabarre Élagage"
-          widths={[190, 380]}
-          sizes="190px"
-          class="h-[41px] w-auto lg:h-[46px]"
+          widths={[92, 184]}
+          sizes="92px"
+          class="h-full w-auto"
           loading="eager"
         />
       </a>
@@ -244,10 +246,10 @@ const desktopLinks = mainLinks.slice(0, 3);
       const next = window.scrollY > 24;
       if (next === compact || !inner) return;
       compact = next;
-      inner.classList.toggle('h-[64px]', next);
-      inner.classList.toggle('lg:h-[68px]', next);
-      inner.classList.toggle('h-[76px]', !next);
-      inner.classList.toggle('lg:h-[84px]', !next);
+      inner.classList.toggle('h-[76px]', next);
+      inner.classList.toggle('lg:h-[84px]', next);
+      inner.classList.toggle('h-[96px]', !next);
+      inner.classList.toggle('lg:h-[108px]', !next);
     },
     { passive: true }
   );

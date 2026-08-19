@@ -1,9 +1,7 @@
 import type { ImageMetadata } from 'astro';
 
-import cheneAvant from '../assets/realisation-chene-avant.webp';
-import cheneApres from '../assets/realisation-chene-apres.webp';
-import peuplierAvant from '../assets/realisation-peuplier-avant.webp';
-import peuplierApres from '../assets/realisation-peuplier-apres.webp';
+import entaille from '../assets/abattage-entaille-direction.webp';
+import arbreAuSol from '../assets/abattage-arbre-au-sol.webp';
 
 export interface Realisation {
   slug: string;
@@ -12,45 +10,41 @@ export interface Realisation {
   commune: string;
   contrainte: string;
   resume: string;
-  before: ImageMetadata;
-  after: ImageMetadata;
-  beforeAlt: string;
-  afterAlt: string;
+  photo: ImageMetadata;
+  photoAlt: string;
 }
 
 /**
  * Les textes decrivent des cas de figure types tant que les fiches
  * de chantier reelles ne sont pas fournies. Voir A-COMPLETER.md.
+ *
+ * Une seule photo par chantier : les paires avant / apres exigent deux
+ * cliches du meme arbre, qui n'ont pas ete fournis. Mieux vaut un visuel
+ * juste qu'un rapprochement de deux arbres differents.
  */
 export const REALISATIONS: Realisation[] = [
   {
-    slug: 'chene-reduction-couronne',
-    essence: 'Chêne pédonculé, environ 12 mètres',
-    prestation: 'Réduction de couronne et éclaircie',
+    slug: 'abattage-directionnel',
+    essence: 'Feuillu de plein champ, environ 14 mètres',
+    prestation: 'Abattage directionnel au pied',
     commune: 'Montauban',
-    contrainte: 'Ligne électrique basse tension à moins de trois mètres',
+    contrainte: 'Clôture et ligne aérienne dans l\u2019axe de chute',
     resume:
-      "Couronne allégée sur un tiers du volume, coupes prises sur tire-sève, branches descendues à la corde côté rue. Broyage sur place et bûches laissées au propriétaire.",
-    before: cheneAvant,
-    after: cheneApres,
-    beforeAlt:
-      "Chêne de 12 mètres au houppier dense avant réduction de couronne à Montauban",
-    afterAlt:
-      "Le même chêne après réduction de couronne, silhouette allégée et branches dégagées de la ligne électrique",
+      "Entaille de direction ouverte du côté choisi, charnière conservée pour tenir l'arbre jusqu'au bout de sa course. Tronc débité sur place, houppier broyé et terrain dégagé.",
+    photo: entaille,
+    photoAlt:
+      "Entaille de direction ouverte à la tronçonneuse au pied d'un tronc avant abattage",
   },
   {
-    slug: 'peuplier-demontage',
-    essence: 'Peuplier, environ 18 mètres, tronc creux',
-    prestation: 'Démontage par tronçons avec rétention',
+    slug: 'abattage-terrain-degage',
+    essence: 'Feuillu, environ 12 mètres, houppier déséquilibré',
+    prestation: 'Abattage et évacuation des rémanents',
     commune: 'Nègrepelisse',
-    contrainte: 'Toiture et abri de jardin en zone de chute',
+    contrainte: 'Chute à distancer d\u2019une clôture mitoyenne',
     resume:
-      "Démontage en grimpé par sections courtes, chaque tronçon retenu à la corde puis posé au sol. Souche rognée à 25 centimètres sous le niveau du terrain.",
-    before: peuplierAvant,
-    after: peuplierApres,
-    beforeAlt:
-      "Peuplier de 18 mètres au tronc creux surplombant une toiture avant démontage",
-    afterAlt:
-      'Terrain dégagé après démontage du peuplier et rognage de la souche, pelouse rendue praticable',
+      "Arbre couché dans l'axe prévu, branches séparées du tronc puis broyées. Bûches laissées au propriétaire, souche rognée en option.",
+    photo: arbreAuSol,
+    photoAlt:
+      'Arbre abattu couché au sol, houppier séparé du tronc avant broyage des rémanents',
   },
 ];
