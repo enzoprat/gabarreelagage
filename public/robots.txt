@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://DOMAINE-A-DEFINIR.fr/sitemap-index.xml

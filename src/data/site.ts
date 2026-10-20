@@ -4,7 +4,14 @@
  * Voir A-COMPLETER.md
  */
 
-export const SITE_URL = 'https://DOMAINE-A-DEFINIR.fr';
+/**
+ * Derive de `site` dans astro.config.mjs, qui suit l'environnement de
+ * deploiement (domaine definitif, GitHub Pages ou Vercel). Le repli ne sert
+ * qu'aux outils qui lisent ce fichier hors build Astro.
+ */
+export const SITE_URL = (
+  import.meta.env.SITE ?? 'https://DOMAINE-A-DEFINIR.fr'
+).replace(/\/$/, '');
 
 export const PHONE_DISPLAY = '06 66 63 73 35';
 export const PHONE_HREF = 'tel:+33666637335';
